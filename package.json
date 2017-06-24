@@ -1,0 +1,19 @@
+{
+  "name": "prac-fullstack-app",
+  "version": "1.0.0",
+  "description": "practicing on building a fullstack app",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaronev/prac-fullstack-app.git"
+  },
+  "author": "Aaron Villanueva",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aaronev/prac-fullstack-app/issues"
+  },
+  "homepage": "https://github.com/aaronev/prac-fullstack-app#readme"
+}
