@@ -1,0 +1,11 @@
+<h2>Recent Reviews</h2>
+
+<div class="review-list">
+<% reviews.forEach(function(review) { %>
+  <div>
+    <h4><a href="/albums/<%= review.album_id %>"><%= review.title %></a></h4>
+    <p><%= review.review %></p>
+    <h5><a href="/user/<%= review.user_id %>"><%= review.name %></a></h5>
+  </div>
+<% }) %>
+</div>

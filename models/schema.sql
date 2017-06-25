@@ -20,6 +20,6 @@ CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
   album_id INTEGER REFERENCES albums,
-  review VARCHAR(255) NOT NULL,
+  review VARCHAR() NOT NULL,
   timestamp TIMESTAMP DEFAULT current_timestamp
 );

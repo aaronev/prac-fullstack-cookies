@@ -1,0 +1,27 @@
+<% include ./header%>
+  
+  <body>
+    <div class="render-info">
+    
+      <% if (!auth) { %> 
+
+        <img src="/img-colorful-vinyl.jpg">
+
+      <% } if (user) { %> 
+        
+        <% include ./profile %>
+      
+      <% } if (albums) { %>
+        
+        <% include ./list-albums%>
+      
+      <% } if (reviews){ %>
+        
+        <% include ./list-reviews%>
+      
+      <% } %>
+
+    </div>
+  </body>
+  
+<% include ./footer%>

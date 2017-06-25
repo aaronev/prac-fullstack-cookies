@@ -1,0 +1,55 @@
+html {
+  width: 100%;
+}
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.header-nav {
+  border: solid;
+  position: relative;
+  text-align: center;
+  height: 100px;
+}
+
+.header-nav ul {
+  list-style-type: none;
+  display: inline-flex;
+}
+
+.header-nav li {
+  list-style-type: none;
+  display: inline-flex;
+}
+
+.header-nav img {
+  position: absolute;
+  left: 00px;
+  bottom: 00px;  
+  height: 100%;
+}
+
+.header-nav h1 {
+  position: absolute;
+  left: 85px;
+  top: -15px;
+  font-size: 50px;
+}
+
+.header-signs{
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  text-align: center;
+  width: 100px;
+  height: 15px;
+  font-size: 15px;
+}
+
+.render-info {
+  text-align: center;
+  overflow-x: scroll;
+  width: auto;
+  height: 300px;
+}
