@@ -9,6 +9,19 @@ app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//Helpers
+
+nonUserRenders = (res, user, albums, reviews, signin, signup) => {
+  return (res.render('body', {
+    auth: null,
+    user: user,
+    albums: albums,
+    reviews: reviews,
+    signin: signin,
+    signup: signup
+  }))
+}
+
 //Non-Users
 
 app.get('/', (req, res, next) => {
@@ -16,20 +29,31 @@ app.get('/', (req, res, next) => {
   .then(albums => {
     db.getReviews()
     .then(reviews => {
-      res.render('body', {
-        auth: null,
-        user: null,
-        albums: albums, 
-        reviews:reviews
-      })
+      nonUserRenders(res, null, albums, reviews, null, null)
     })
   })
+  .catch(next)
 })
 
-app.get('/', (req, res, next) => {
-  db.getAlbumsByID()
-  
-}
+app.get('/albums/:id', (req, res, next) => {
+  db.getAlbumsByID(req.params.id)
+  .then( albums => {
+    db.getReviewsByAlbumID(req.params.id)
+    .then( reviews => {
+      nonUserRenders(res, null, albums, reviews, null)
+    })
+  })
+  .catch(next)
+})
+
+app.get('/signin', (req, res, next) => {
+  nonUserRenders(res, null, null, null, 'yes', null)
+})
+
+app.get('/signup', (req, res, next) => {
+  nonUserRenders(res, null, null, null, null, 'yes')
+})
+
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {

@@ -2,7 +2,7 @@
   
   <body>
     <div class="render-info">
-    
+
       <% if (!auth) { %> 
 
         <img src="/img-colorful-vinyl.jpg">
@@ -19,6 +19,14 @@
         
         <% include ./list-reviews%>
       
+      <% } if (signin) { %>
+
+        <% include ./signin%>
+
+      <% } if (signup) { %>
+
+         <% include ./signup%>
+
       <% } %>
 
     </div>

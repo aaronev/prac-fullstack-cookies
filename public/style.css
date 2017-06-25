@@ -6,6 +6,9 @@ body {
   width: 100%;
 }
 
+ul li {
+  list-style-type: none;
+}
 .header-nav {
   border: solid;
   position: relative;
@@ -51,5 +54,15 @@ body {
   text-align: center;
   overflow-x: scroll;
   width: auto;
-  height: 300px;
+  height: 500px;
+}
+
+.signin {
+  text-align: center;
+  position: relative;
+  bottom: 150px;
+  left: 700px;
+  width: 100px;
+  font-size: 20px;
+  padding: 10px;
 }

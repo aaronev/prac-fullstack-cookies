@@ -7,13 +7,13 @@
           
           <ul>
             <li><a href="/<%= auth%>"><img src="/img-colorful-vinyl.jpg"></a></li>
-          
+            
             <li><h1>Vinyl</h1></li>
           
           <div class="header-signs">
             <% if (!auth) { %>
-            <li><a href="/">Sign In</a></li>
-            <li><a href="/">Sign Up</a></li>
+            <li><a href="/signin">Sign In</a></li>
+            <li><a href="/signup">Sign Up</a></li>
             <% } else { %>
             <li><a href="/">Sign Out</a></li>
             <% } %>
