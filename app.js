@@ -45,12 +45,15 @@ app.get( '/', ( req, res, next ) => {
 })
 
 app.get( '/albums/:id', ( req, res, next ) => {
-  const {id} = req.params
-  db.getAllInfoByID( 'albums', id )
-  .then( albums => {
-    db.getReviewsByAlbumID( id )
-    .then( reviews => {
-      res.send( albums, reviews )
+  const { id } = req.params
+  db.getAllInfo( 'users' )
+  .then( users => {
+    db.getAllInfoByID( 'albums', id )
+    .then( albums => {
+      db.getReviewsByAlbumID( id )
+      .then( reviews => {
+        itRenders( res, null, users, albums, reviews, null, null )
+      })
     })
   })
   .catch( next )

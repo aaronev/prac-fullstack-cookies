@@ -12,7 +12,7 @@ const getAllInfoByID = function(table, id) {
 }
 
 const getReviewsByAlbumID = function(id) {
-  return db.any(`SELECT * FROM reviews WHERE album.id = $1`, [id])
+  return db.any(`SELECT * FROM reviews WHERE album_id = $1;`, [id])
 }
 
 module.exports = {
