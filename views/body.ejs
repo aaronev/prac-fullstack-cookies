@@ -3,36 +3,24 @@
   <body>
     <div class="render-info">
    
-
-
-
-
-
-
-    <% if (!auth) { %> 
+    <% if ( !auth ) { %> 
       <img src="/img-colorful-vinyl.jpg">
-    
     <% } else { %>
-    
-      <% include ./profile %>
-    
+      <% include ./profile %> 
     <% } %>
 
-        <% if (albums) { %>
-          <% include ./list-albums%>
-        <% } if (reviews){ %>
-          <% include ./list-reviews%>
-        <% } if (signin) { %>
-          <% include ./signin%>
-        <% } if (signup) { %>
-           <% include ./signup%>
-        <% } %>
-
-
+    <% if ( albums ) { %>
+      <% include ./list-albums%>
     
-
-
-
+    <% } if ( reviews ){ %>
+      <% include ./list-reviews%>
+    
+    <% } if ( signin ) { %>
+      <% include ./signin%>
+    
+    <% } if ( signup ) { %>
+       <% include ./signup%>
+    <% } %>
 
     </div>
   </body>

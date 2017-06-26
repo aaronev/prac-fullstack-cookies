@@ -17,10 +17,9 @@ var userSession;
 
 // }
 
-
-nonUserRenders = ( res, users, albums, reviews, signin, signup ) => {
+itRenders = ( res, auth, users, albums, reviews, signin, signup ) => {
   return ( res.render( 'body', {
-    auth: null,
+    auth: auth,
     users: users,
     albums: albums,
     reviews: reviews,
@@ -32,13 +31,13 @@ nonUserRenders = ( res, users, albums, reviews, signin, signup ) => {
 //Non-Users
 
 app.get( '/', ( req, res, next ) => {
-  db.getAllInfo('users')
+  db.getAllInfo( 'users' )
   .then( users => {
-    db.getAllInfo('albums')
+    db.getAllInfo( 'albums' )
     .then( albums => {
-      db.getAllInfo('reviews')
+      db.getAllInfo( 'reviews' )
       .then( reviews => {
-        nonUserRenders( res, users, albums, reviews, null, null )
+        itRenders( res, null, users, albums, reviews, null, null )
       })
     })
   })
@@ -46,28 +45,27 @@ app.get( '/', ( req, res, next ) => {
 })
 
 app.get( '/albums/:id', ( req, res, next ) => {
-  db.getAlbumsByID(req.params.id)
-  .then( albums => { 
-    db.getAllInfoWithCondition( req.params.id )
-    .then( albumreviews => {
-      console.log(albumreviews)
-      nonUserRenders( res, null, albums, albumreviews, null )
+  const {id} = req.params
+  db.getAllInfoByID( 'albums', id )
+  .then( albums => {
+    db.getReviewsByAlbumID( id )
+    .then( reviews => {
+      res.send( albums, reviews )
     })
   })
   .catch( next )
 })
 
 app.get( '/signin', ( req, res, next ) => {
-  nonUserRenders( res, null, null, null, 'yes', null )
+  itRenders( res, null, null, null, null, 'yes', null )
 })
 
 app.get( '/signup', ( req, res, next ) => {
-  nonUserRenders( res, null, null, null, null, 'yes' )
+  itRenders( res, null, null, null, null, null, 'yes' )
 })
 
 app.post( '/email-availabilty', ( req, res, next ) => {
   const { email, password, name } = req.body
-
 })
 
 app.post( '/verify-user', ( req, res, next ) => {
