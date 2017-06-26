@@ -1,12 +1,25 @@
 <h2>Recent Reviews</h2>
 
+
 <div class="review-list">
-<% reviews.forEach(function(review) { %>
-  <div>
-    <h4><a href="/albums/<%= review.album_id %>"><%= review.title %></a></h4>
+  <% reviews.forEach(function(review) { %>
+    <div>
+    
+    <% albums.forEach(function(album) { %>
+      <% if (album.id === review.album_id) { %>
+        <h4><a href="/albums/<%= album.id %>"><%= album.title %></a></h4>
+      <% } %>
+    <% }) %>
+
     <h4><%= review.review %></h4>
     <p><%= review.timestamp%></p>
-    <h5><a href="/user/<%= review.user_id %>"><%= review.name %></a></h5>
-  </div>
-<% }) %>
+    
+    <% users.forEach(function(user) { %>
+      <% if (user.id === review.user_id) { %>
+        <h5><a href="/user/<%= review.user_id %>"><%= user.name %></a></h5>
+      <% } %>
+    <% }) %>
+
+    </div>
+  <% }) %>
 </div>

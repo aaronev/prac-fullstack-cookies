@@ -1,10 +1,18 @@
-<h1> Albums </h1>
+<% if (albums.length > 1) { %>
 
-<div class="album-list">
-<% albums.forEach(function(album) { %>
-  <div>
-    <h4><a href="/albums/<%= album.id %>"><%= album.title %></a></h4>
-    <span><%= album.artist %></span>
+  <h1>Albums </h1>
+
+  <div class="album-list">
+  <% albums.forEach(function(album) { %>
+    <div>
+      <h4><a href="/albums/<%= album.id %>"><%= album.title %></a></h4>
+      <span><%= album.artist %></span>
+    </div>
+  <% }) %>
   </div>
-<% }) %>
-</div>
+
+<% } else { %>
+
+  <h1><%= albums[0].title %></h1>
+  
+<% } %>
