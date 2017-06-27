@@ -48,9 +48,24 @@ app.get( '/albums/:id', ( req, res, next ) => {
   const { id } = req.params
   db.getAllInfo( 'users' )
   .then( users => {
-    db.getAllInfoByID( 'albums', id )
+    db.getAllInfoByID( 'albums', 'id', id )
     .then( albums => {
-      db.getReviewsByAlbumID( id )
+       db.getAllInfoByID( 'reviews', 'album_id' , id)
+      .then( reviews => {
+        itRenders( res, null, users, albums, reviews, null, null )
+      })
+    })
+  })
+  .catch( next )
+})
+
+app.get( '/users/:id', ( req, res, next ) => {
+  const { id } = req.params
+  db.getAllInfo( 'albums' )
+  .then( albums => {
+    db.getAllInfoByID( 'users', 'id', id)
+    .then( users => {
+      db.getAllInfoByID( 'reviews', 'user_id', id)
       .then( reviews => {
         itRenders( res, null, users, albums, reviews, null, null )
       })
@@ -63,7 +78,15 @@ app.get( '/signin', ( req, res, next ) => {
   itRenders( res, null, null, null, null, 'yes', null )
 })
 
+app.post( '/signin', ( req, res, next ) => {
+  itRenders( res, null, null, null, null, 'yes', null )
+})
+
 app.get( '/signup', ( req, res, next ) => {
+  itRenders( res, null, null, null, null, null, 'yes' )
+})
+
+app.post( '/signup', ( req, res, next ) => {
   itRenders( res, null, null, null, null, null, 'yes' )
 })
 

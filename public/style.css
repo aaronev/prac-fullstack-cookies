@@ -10,7 +10,6 @@ ul li {
   list-style-type: none;
 }
 .header-nav {
-  border: solid;
   position: relative;
   text-align: center;
   height: 100px;
@@ -51,6 +50,8 @@ ul li {
 }
 
 .render-info {
+  background-image: url('/img-colorful-vinyl.jpg');
+  background-repeat: no-repeat;
   text-align: center;
   overflow-x: scroll;
   width: auto;

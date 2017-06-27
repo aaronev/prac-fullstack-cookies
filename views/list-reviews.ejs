@@ -15,7 +15,7 @@
     
     <% users.forEach(function(user) { %>
       <% if (user.id === review.user_id) { %>
-        <h5><a href="/user/<%= review.user_id %>"><%= user.name %></a></h5>
+        <h5><a href="/users/<%= review.user_id %>"><%= user.name %></a></h5>
       <% } %>
     <% }) %>
 

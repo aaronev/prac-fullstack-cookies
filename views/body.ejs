@@ -2,12 +2,6 @@
   
   <body>
     <div class="render-info">
-   
-    <% if ( !auth ) { %> 
-      <img src="/img-colorful-vinyl.jpg">
-    <% } else { %>
-      <% include ./profile %> 
-    <% } %>
 
     <% if ( albums ) { %>
       <% include ./list-albums%>
@@ -16,13 +10,15 @@
       <% include ./list-reviews%>
     
     <% } if ( signin ) { %>
+      <img src="/img-colorful-vinyl.jpg">
       <% include ./signin%>
     
     <% } if ( signup ) { %>
-       <% include ./signup%>
+      <img src="/img-colorful-vinyl.jpg">
+      <% include ./signup%>
     <% } %>
 
     </div>
   </body>
   
-<% include ./footer%>
+<% include ./footer%> 

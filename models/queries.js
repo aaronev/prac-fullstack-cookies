@@ -7,16 +7,11 @@ const getAllInfo = function(table) {
   return db.any(`SELECT * FROM ${table};`)
 }
 
-const getAllInfoByID = function(table, id) {
-  return db.any(`SELECT * FROM ${table} WHERE id = $1;`, [id])
-}
-
-const getReviewsByAlbumID = function(id) {
-  return db.any(`SELECT * FROM reviews WHERE album_id = $1;`, [id])
+const getAllInfoByID = function(table, columnID, id) {
+  return db.any(`SELECT * FROM ${table} WHERE ${columnID} = $1;`, [id])
 }
 
 module.exports = {
   getAllInfo,
-  getAllInfoByID,
-  getReviewsByAlbumID
+  getAllInfoByID
 }
