@@ -1,10 +1,7 @@
-<div class="signin">
-  <form action="/verify-user" method="post">
-    <legend>Welcome</legend>
-    <ul>
-      <li><input type="text" name = "email" placeholder="Email Address"></li>
-      <li><input type="text" name = "password" placeholder="Password"></li>
-    </ul> 
-    <input type="submit" value="Sign In">
-  </form>
-</div>
+<%include ./header%>
+
+<form method="post" action="/signin">
+  <input type="text" name="email" placeholder="Email Address"/>
+  <input type="text" name="password" placeholder="Password"/>
+  <input type="submit"/>
+</form>

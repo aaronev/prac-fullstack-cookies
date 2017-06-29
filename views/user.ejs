@@ -1,0 +1,17 @@
+<% include ./header%>
+
+
+<h2><%= users[0].name %></h2>
+<img src=<%= users[0].image%> width="100px" height="100px"/>
+<h3><%= users[0].email %><h3>
+<h4><%= users[0].timestamp %></h4>
+
+<h3>Albums</h3>
+
+<% albums.forEach(function(album) { %>
+  <h4><a href="/albums/<%= album.id%>"><%= album.title %></a></h4>
+  <h6><%= album.artist%></h6>
+<% }) %>
+
+<h3>Your Reviews</h3>
+<% include ./list-reviews %>

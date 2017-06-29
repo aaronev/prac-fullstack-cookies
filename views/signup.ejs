@@ -1,11 +1,8 @@
-<div class="signin">
-  <form method="post" action="/email-availabilty">
-    <legend>New User</legend>
-    <ul>
-      <li><input type="text" name = 'name' placeholder ='Full Name'></li>
-      <li><input type="text" name = 'email' placeholder ='Email Address'></li>
-      <li><input type="text" name = 'password' placeholder ='Password'></li>
-    </ul>
-    <input type="submit" placeholder ='Sign Up'>
-  </form>
-</div>
+<%include ./header%>
+
+<form method="post" action="/signup">
+  <input type="text" name="name" placeholder="Name"/>
+  <input type="text" name="email" placeholder="Email Address"/>
+  <input type="text" name="password" placeholder="Password"/>
+  <input type="submit"/>
+</form>
