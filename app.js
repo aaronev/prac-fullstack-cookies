@@ -34,7 +34,6 @@ var session = null
 
 app.get('/', ( req, res, next ) => {
   if (session) {
-    console.log('usersfasdjfl;k',session.users)
     session.albums
     .then(albums => {
       console.log(albums)
@@ -43,7 +42,7 @@ app.get('/', ( req, res, next ) => {
         console.log(reviews)
         res.render('profile', {users: session.users, albums, reviews})
       })
-    })
+    }).catch(next)
   } else {
     Users.all
     .then(users => {
@@ -117,7 +116,7 @@ app.get('/signup', (req, res, next) => {
 
 app.post('/signup', (req, res, next) => {
 const {name, email, password} = req.body 
-const image = './public/img-colorful-vinyl.jpg'
+const image = '/img-colorful-vinyl.jpg'
   Users.all
   .then(users => {
     console.log(users)
@@ -143,6 +142,10 @@ app.get('/signout', (req, res, next) => {
   res.redirect('/')
 })
 
+app.get('/test', (req, res, next) => {
+  Users.all
+  .then(users => res.send(users))
+})
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
