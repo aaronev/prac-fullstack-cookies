@@ -1,0 +1,17 @@
+<% reviews.forEach(function(review) { %>
+
+  <% albums.forEach(function(album) { %>
+    <% if (album.id === review.album_id) { %>
+      <h4><a href="/albums/<%= album.id%>"><%= album.title %></a></h4>
+    <% } %>
+  <% }) %>
+
+  <h5><%= review.review%><h5>
+
+  <% users.forEach(function(user) { %>
+    <% if (user.id === review.user_id) { %>
+      <h4><a href="/users/<%= user.id%>"><%= user.name %></a></h4>
+    <% } %>
+   <% }) %>
+
+<% }) %>
