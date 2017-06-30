@@ -25,6 +25,8 @@
 
   <h5><%= review.review%><h5>
 
-  <button>Delete</button>
+  <form method="post" action="/reviews/<%= review.id%>">
+  	<input type="submit" value="Delete"/>
+  </form>
 
 <% }) %>

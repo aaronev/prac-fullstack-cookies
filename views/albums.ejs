@@ -4,4 +4,11 @@
 
 <h3>Album Reviews</h3>
 
+<% if (session) { %>
+  <form method="post" action="/albums/<%= albums[0].id%>">
+    <textarea name="review"></textarea>
+    <input type="submit" value="Post Review">
+  </form>
+<% } %>
+
 <% include ./list-reviews%>

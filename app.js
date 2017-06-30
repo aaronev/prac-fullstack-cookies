@@ -9,12 +9,12 @@ app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//Helpers
+//_____________________________________________________________________________________Helpers
 
 var Users = {
   all: data.getAllInfoFromTable('users'),
   id: (id) => data.getAllInfoByColumnID('users', 'id', id),
-  add:(name, email, password, img) => data.addUsers(name, email, password, img)
+  add:(nme, eml, pswrd, img) => data.addUsers(nme, eml, pswrd, img)
 }
 
 var Albums = {
@@ -27,17 +27,18 @@ var Reviews = {
   id: (id) => data.getAllInfoByColumnID('reviews', 'id', id),
   userID: (id) => data.getAllInfoByColumnID('reviews', 'user_id', id),
   albumID: (id) => data.getAllInfoByColumnID('reviews', 'album_id', id),
-  add: data.addReviews()
+  add: (uID, aID, rev) => data.addReviews(uID, aID, rev),
+  delete: (id) => data.deleteReviewByID(id)
 }
 
 var session = null 
 
+//__________________________________________________________________________________Unauthorized Users
 app.get('/', ( req, res, next ) => {
   if (session) {
-    session.albums
+    Albums.all
     .then(albums => {
-      console.log(albums)
-      session.reviews
+      Reviews.userID(session.users.id)
       .then(reviews => {
         console.log(reviews)
         res.render('profile', {users: session.users, albums, reviews})
@@ -64,7 +65,7 @@ app.get('/albums/:id', (req, res, next) => {
     .then(albums => {
       Reviews.albumID(req.params.id)
       .then(reviews => {
-        res.render('albums', {users, albums, reviews})
+        res.render('albums', {session: session, users, albums, reviews})
       })  
     })
   }).catch(next)
@@ -83,7 +84,7 @@ app.get('/users/:id', (req, res, next) => {
   }).catch(next)
 })
 
-//__________________________________________________________Transition to User Session
+//_________________________________________________________________________Authentication
 
 app.get('/signin', (req, res, next) => {
   res.render('signin')
@@ -91,7 +92,6 @@ app.get('/signin', (req, res, next) => {
 
 app.post('/signin', (req, res, next) => {
   const {email, password} = req.body
-  console.log(email, password)
   Users.all
   .then(users => {
    const validUser = users.find(user => 
@@ -99,9 +99,7 @@ app.post('/signin', (req, res, next) => {
       user.password === password)
     if (validUser) { 
       session = {
-        users: validUser,
-        albums: Albums.all,
-        reviews: Reviews.userID(validUser.id)
+        users: validUser
       }
       res.redirect('/')
     } else {
@@ -119,23 +117,39 @@ const {name, email, password} = req.body
 const image = '/img-colorful-vinyl.jpg'
   Users.all
   .then(users => {
-    console.log(users)
     const invalidEmail = users.find(user =>
     user.email === email)
     if (invalidEmail) { 
       res.redirect('/signup') 
     } else {
       Users.add(name, email, password, image)
-      res.redirect('/signin')
+      .then(() => { res.redirect('/signin')})
     }
   }).catch(next)
 })
 
-//_________________________________________________________Session Authenticated Users
+//___________________________________________________________________________Authorized Users
+
+app.post('/albums/:id', (req, res, next) => {
+  const review = req.body.review || null
+  if (review) {
+    Reviews.add(session.users.id, req.params.id, review)
+    .then(() => {res.redirect('/albums/'+req.params.id)})
+    .catch(next)
+  } else {
+    res.redirect('/albums/'+req.params.id)
+  }
+})
+
+app.post('/reviews/:id', (req, res, next) => {
+  console.log(req.params.id)
+  Reviews.delete(req.params.id)
+  .then(() => { res.redirect('/') })
+  .catch(next)
+})
 
 
-
-//____________________________________________________________loging out of session 
+//__________________________________________________________________________loging out of session 
 
 app.get('/signout', (req, res, next) => {
   session = null
