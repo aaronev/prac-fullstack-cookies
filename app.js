@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const data = require('./models/queries.js')
+const cookieParser = require('cookie-parser')
 const app = express()
 
 require('ejs')
@@ -8,6 +9,7 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 //_____________________________________________________________________________________Helpers
 
@@ -34,13 +36,25 @@ var Reviews = {
 var session = null 
 
 //__________________________________________________________________________________Unauthorized Users
+
+app.use((req, res, next) => {
+  const { users } = req.cookies
+  if (users) {
+    Users.id(users.id)
+    .then(users => {
+      req.users = users[0]
+    })
+  }
+  next()
+})
+
+
 app.get('/', ( req, res, next ) => {
   if (session) {
     Albums.all
     .then(albums => {
       Reviews.userID(session.users.id)
       .then(reviews => {
-        console.log(reviews)
         res.render('profile', {users: session.users, albums, reviews})
       })
     }).catch(next)
@@ -100,7 +114,9 @@ app.post('/signin', (req, res, next) => {
     if (validUser) { 
       session = {
         users: validUser
-      }
+      },
+      res.cookie('users', validUser, {
+        expires: new Date(Date.now() + 900000)})
       res.redirect('/')
     } else {
       res.redirect('/signin')
@@ -142,7 +158,6 @@ app.post('/albums/:id', (req, res, next) => {
 })
 
 app.post('/reviews/:id', (req, res, next) => {
-  console.log(req.params.id)
   Reviews.delete(req.params.id)
   .then(() => { res.redirect('/') })
   .catch(next)
@@ -153,6 +168,9 @@ app.post('/reviews/:id', (req, res, next) => {
 
 app.get('/signout', (req, res, next) => {
   session = null
+  res.cookie('users', null, {
+    expires: new Date(Date.now())
+  })
   res.redirect('/')
 })
 
